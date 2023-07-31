@@ -1,20 +1,24 @@
+import re
 from abc import ABC, abstractmethod
 import datetime
 
 
 class Vacancies(ABC):
-    """Абстрактный класс для вакансий"""
-
+    """
+    Абстрактный класс для вакансий
+    """
     @abstractmethod
     def __init__(self):
         pass
 
 
 class VacanciesHH(Vacancies):
-    """Класс для работы с вакансиями HeadHunter"""
-
+    """
+    Класс для работы с вакансиями HeadHunter
+    """
     def __init__(self, info):
         self.url = info['alternate_url']
+        self.company = info['employer']['name']
         self.title = info['name']
         self.city = info['area']['name']
         if info['salary'] == None:
@@ -27,7 +31,7 @@ class VacanciesHH(Vacancies):
             else:
                 self.salary_int = info['salary']['to']
                 self.salary = f"Зарплата до {info['salary']['to']} {info['salary']['currency']}"
-        self.requirements = f"{info['snippet']['requirement']} {info['snippet']['responsibility']}"
+        self.requirements = f"{self.clean_html(info['snippet']['requirement'] + info['snippet']['responsibility'])}"
         self.date = self.date_convesion(info['created_at'])
 
     @staticmethod
@@ -39,3 +43,9 @@ class VacanciesHH(Vacancies):
         """
         data_format = datetime.datetime.strptime(data, '%Y-%m-%dT%H:%M:%S%z')
         return f"Дата создания вакансии: {datetime.datetime.strftime(data_format, '%d %B %Y %H:%M:%S %Z')}"
+
+    @staticmethod
+    def clean_html(raw_html):
+        clean_r = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+        cleantext = re.sub(clean_r, '', raw_html)
+        return cleantext

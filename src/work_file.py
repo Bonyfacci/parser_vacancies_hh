@@ -3,8 +3,9 @@ import json
 
 
 class WorkToFile(ABC):
-    """Абстрактный класс для работы с файлами"""
-
+    """
+    Абстрактный класс для работы с файлами
+    """
     @staticmethod
     def read():
         pass
@@ -15,8 +16,9 @@ class WorkToFile(ABC):
 
 
 class ReadWriteToJSON(WorkToFile):
-    """Класс для работы с JSON-файлами"""
-
+    """
+    Класс для работы с JSON-файлами
+    """
     @staticmethod
     def read_json():
         """
@@ -28,11 +30,11 @@ class ReadWriteToJSON(WorkToFile):
             return data
 
     @staticmethod
-    def write_json(data):
+    def write_json(data, file_name='vacancies.json'):
         """
         Записи информации в JSON-файл
         """
-        with open('vacancies.json', 'w', encoding='utf-8') as file:
+        with open(file_name, 'w', encoding='utf-8') as file:
             json.dump(data, file, indent=4, ensure_ascii=False)
 
     @staticmethod
