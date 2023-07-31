@@ -1,6 +1,7 @@
 import textwrap
 from random import shuffle
 
+from src.db_manager import DBManager
 from src.utils import WorkToUser
 from src.work_file import ReadWriteToJSON
 
@@ -50,6 +51,14 @@ def top_10_vacancies():
     ReadWriteToJSON.write_json(top_vacancies, file_name='top_vacancies.json',)
 
 
+def work_db():
+    DBManager.get_companies_and_vacancies_count('hh_vacancies', 'vacancies')
+    DBManager.get_all_vacancies('hh_vacancies', 'vacancies')
+    DBManager.get_avg_salary('hh_vacancies', 'vacancies')
+    DBManager.get_vacancies_with_higher_salary('hh_vacancies', 'vacancies')
+    DBManager.get_vacancies_with_keyword('hh_vacancies', 'vacancies')
+
+
 def main():
 
     while input('Нажмите Enter, чтобы начать: ') != '':
@@ -61,6 +70,9 @@ def main():
     f = open('top_vacancies.json', 'w')
     f.close()
 
+    # Создаем базу данных
+    DBManager.create_db('hh_vacancies')
+
     print('\nПриветствую Вас! Подготовим Ваш запрос по поиску вакансий.')
 
     player = WorkToUser()
@@ -69,6 +81,13 @@ def main():
 
     print('\nТеперь выбирем топ 10 вакансий, которые Вам нравятся.')
     top_10_vacancies()
+
+    # Сохраняем вакансии в базе данных
+    DBManager.save_data_to_database(ReadWriteToJSON.read_json('vacancies.json'), 'hh_vacancies', 'vacancies')
+    DBManager.save_data_to_database(ReadWriteToJSON.read_json('top_vacancies.json'), 'hh_vacancies', 'top_vacancies')
+
+    # Работа с классом DBManager
+    work_db()
 
 
 if __name__ == '__main__':

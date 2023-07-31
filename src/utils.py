@@ -58,7 +58,7 @@ class WorkToUser:
         """
         Получает количество искомых вакансий от пользователя
         """
-        self.quantity = 100
+        self.quantity = 10
         print(f'\nВам будет предтавлен список из {self.quantity} вакансий.')
 
     def work_api(self):
