@@ -20,12 +20,12 @@ class ReadWriteToJSON(WorkToFile):
     Класс для работы с JSON-файлами
     """
     @staticmethod
-    def read_json():
+    def read_json(file_name='vacancies.json'):
         """
         Чтения JSON-файла
         :return: list
         """
-        with open('vacancies.json', 'r', encoding='utf-8') as file:
+        with open(file_name, 'r', encoding='utf-8') as file:
             data = json.load(file)
             return data
 
