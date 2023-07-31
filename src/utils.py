@@ -4,8 +4,9 @@ from src.work_vacancies import VacanciesHH
 
 
 class WorkToUser:
-    """Взаимодействие с пользователем"""
-
+    """
+    Взаимодействие с пользователем
+    """
     def __init__(self):
         self.site = None
         self.request = None
@@ -20,25 +21,31 @@ class WorkToUser:
                f"\nКоличество вакансий - {self.quantity}"
 
     def choice_site(self):
-        """Выбирает платформу для поиска вакансий"""
-
+        """
+        Выбирает платформу для поиска вакансий
+        """
         site_list = ['hh.ru']
         print(f'\nДля поиска Ваших вакансий выбрана платформа - {site_list[0]}')
         self.site = site_list[0]
 
     def get_request(self):
-        """Получает запрос пользователя"""
-
+        """
+        Получает запрос пользователя
+        """
         self.request = input("\nВведите Ваш зопрос по поиску вакансий: ")
 
     def choice_city(self):
-        """Выбирает город для поиска вакансий"""
-
+        """
+        Выбирает город для поиска вакансий
+        """
         city_list = ['Россия', 'Москва', 'Санкт-Петербург']
         while True:
             try:
                 choice_user = int(input(
-                    f'1 - {city_list[0]}\n2 - {city_list[1]}\n3 - {city_list[2]}\nВыбирите регион для поиска вакансий: '))
+                    f'1 - {city_list[0]}'
+                    f'\n2 - {city_list[1]}'
+                    f'\n3 - {city_list[2]}'
+                    f'\nВыбирите регион для поиска вакансий: '))
                 if choice_user in [1, 2, 3]:
                     self.city = city_list[choice_user - 1]
                     break
@@ -48,14 +55,16 @@ class WorkToUser:
                 print("Некорректный ввод")
 
     def quantity_vacancies(self):
-        """Получает количество искомых вакансий от пользователя"""
-
+        """
+        Получает количество искомых вакансий от пользователя
+        """
         self.quantity = 100
         print(f'\nВам будет предтавлен список из {self.quantity} вакансий.')
 
     def work_api(self):
-        """Выполняет работу API по запросу пользователя"""
-
+        """
+        Выполняет работу API по запросу пользователя
+        """
         total = []
         city = {'Россия': 113, 'Москва': 1, 'Санкт-Петербург': 2}
         info = HeadHunter(self.request, self.quantity, city[self.city]).get_info()
