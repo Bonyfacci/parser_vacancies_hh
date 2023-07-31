@@ -1,6 +1,6 @@
 from src.work_api import HeadHunter
 from src.work_file import ReadWriteToJSON
-from src.work_vacancies import VacanciesHH, VacanciesSJ, VacanciesSort
+from src.work_vacancies import VacanciesHH
 
 
 class WorkToUser:
@@ -61,3 +61,5 @@ class WorkToUser:
         info = HeadHunter(self.request, self.quantity, city[self.city]).get_info()
         for item in info:
             total.append(VacanciesHH(item).__dict__)
+
+        ReadWriteToJSON.write_json(total)
