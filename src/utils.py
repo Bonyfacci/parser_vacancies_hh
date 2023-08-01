@@ -42,7 +42,7 @@ class WorkToUser:
         while True:
             try:
                 choice_user = int(input(
-                    f'1 - {city_list[0]}'
+                    f'\n1 - {city_list[0]}'
                     f'\n2 - {city_list[1]}'
                     f'\n3 - {city_list[2]}'
                     f'\nВыбирите регион для поиска вакансий: '))
@@ -58,7 +58,7 @@ class WorkToUser:
         """
         Получает количество искомых вакансий от пользователя
         """
-        self.quantity = 10
+        self.quantity = 100
         print(f'\nВам будет предтавлен список из {self.quantity} вакансий.')
 
     def work_api(self):

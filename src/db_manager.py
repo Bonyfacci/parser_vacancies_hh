@@ -8,7 +8,13 @@ from src.config import config
 class DBManager:
 
     @staticmethod
-    def create_db(database_name: str, params=config()):
+    def create_db(database_name: str, params=config()) -> None:
+        """
+        Создаёт базу данных и таблицы
+        :param database_name: str
+        :param params: dict
+        :return: None
+        """
         conn = psycopg2.connect(dbname='postgres', **params)
         conn.autocommit = True
         cur = conn.cursor()
@@ -100,7 +106,7 @@ class DBManager:
             print('Ошибка при работе PostgreSQL', error)
 
     @staticmethod
-    def get_all_vacancies(database_name: str, table_name, params=config()):
+    def get_all_vacancies(database_name: str, table_name: str, user_query: str, params=config()):
         """
         Получает список всех вакансий с указанием названия компании,
         названия вакансии и зарплаты и ссылки на вакансию
@@ -108,7 +114,7 @@ class DBManager:
         try:
             connection = psycopg2.connect(dbname=database_name, **params)
             cursor = connection.cursor()
-            postgresql_select_query = f" select * from {table_name} where company='МФТИ' "
+            postgresql_select_query = f" select * from {table_name} where company='{user_query}' "
 
             cursor.execute(postgresql_select_query)
             total_vacancies = cursor.fetchall()
@@ -125,7 +131,7 @@ class DBManager:
             print('Ошибка при работе PostgreSQL', error)
 
     @staticmethod
-    def get_avg_salary(database_name: str, table_name, params=config()):
+    def get_avg_salary(database_name: str, table_name: str, params=config()):
         """
         Получает среднюю зарплату по вакансиям
         """
@@ -146,7 +152,7 @@ class DBManager:
             print('Ошибка при работе PostgreSQL', error)
 
     @staticmethod
-    def get_vacancies_with_higher_salary(database_name: str, table_name, params=config()):
+    def get_vacancies_with_higher_salary(database_name: str, table_name: str, params=config()):
         """
         Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям
         """
@@ -170,14 +176,38 @@ class DBManager:
             print('Ошибка при работе PostgreSQL', error)
 
     @staticmethod
-    def get_vacancies_with_keyword(database_name: str, table_name, params=config()):
+    def get_vacancies_with_keyword(database_name: str, table_name: str, user_query: str, params=config()):
         """
         Получает список всех вакансий, в названии которых содержатся переданные в метод слова, например 'python'
         """
         try:
             connection = psycopg2.connect(dbname=database_name, **params)
             cursor = connection.cursor()
-            postgresql_select_query = f" select * from {table_name} where title_vacancies LIKE '%Junior%' "
+            postgresql_select_query = f" select * from {table_name} where title_vacancies LIKE '%{user_query}%' "
+
+            cursor.execute(postgresql_select_query)
+            total_vacancies = cursor.fetchall()
+
+            for row in total_vacancies:
+                print(f'\nКомпания - {row[1]},'
+                      f'\nВакансия - {row[2]},'
+                      f'\nЗарплата - {row[4]},'
+                      f'\nСсылка на вакансию - {row[5]}')
+
+            cursor.close()
+            connection.close()
+        except Exception as error:
+            print('Ошибка при работе PostgreSQL', error)
+
+    @staticmethod
+    def get_top10_vacancies(database_name: str, table_name: str, params=config()):
+        """
+        Получает список всех вакансий, которые понравились пользователю
+        """
+        try:
+            connection = psycopg2.connect(dbname=database_name, **params)
+            cursor = connection.cursor()
+            postgresql_select_query = f" select * from {table_name} "
 
             cursor.execute(postgresql_select_query)
             total_vacancies = cursor.fetchall()

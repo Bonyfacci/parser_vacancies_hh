@@ -2,6 +2,12 @@ from configparser import ConfigParser
 
 
 def config(filename="database.ini", section="postgresql"):
+    """
+    Создаёт словарь с данными для подключения к базе данных
+    :param filename: str
+    :param section: str
+    :return: dict
+    """
     # create a parser
     parser = ConfigParser()
     # read config file
