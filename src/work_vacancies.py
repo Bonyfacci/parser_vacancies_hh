@@ -31,7 +31,7 @@ class VacanciesHH(Vacancies):
             else:
                 self.salary_int = info['salary']['to']
                 self.salary = f"Зарплата до {info['salary']['to']} {info['salary']['currency']}"
-        info_requirements = info['snippet']['requirement'] + info['snippet']['responsibility']
+        info_requirements = f"{info['snippet']['requirement']} {info['snippet']['responsibility']}"
         self.requirements = f"{self.clean_html(info_requirements)}"
         self.date = self.date_convesion(info['created_at'])
 
