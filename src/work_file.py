@@ -47,3 +47,28 @@ class ReadWriteToJSON(WorkToFile):
             all_data.append(i)
         with open('vacancies.json', 'w', encoding='utf-8') as file:
             json.dump(all_data, file, indent=4, ensure_ascii=False)
+
+
+class ReadWriteToSQL:
+    """
+    Класс для записи SQL запросов
+    """
+
+    @staticmethod
+    def read_sql(file_name='queries.sql'):
+        """
+        Чтения SQL-файла
+        :return: str
+        """
+        with open(file_name, 'r', encoding='utf-8') as file:
+            data = file.read()
+            return data
+
+    @staticmethod
+    def add_info(data, file_name='queries.sql'):
+        """
+        Добавления информации в SQL-файл
+        """
+
+        with open(file_name, 'a', encoding='utf-8') as file:
+            file.write(data)
