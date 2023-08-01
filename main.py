@@ -113,6 +113,8 @@ def main():
     f.close()
     f = open('top_vacancies.json', 'w')
     f.close()
+    f = open('queries.sql', 'w')
+    f.close()
 
     # Создаем базу данных
     DBManager.create_db('hh_vacancies')
@@ -132,6 +134,9 @@ def main():
 
     # Работа с классом DBManager
     work_db()
+
+    print('\nВсе SQL-запросы Вы можете посмотреть в файле queries.sql')
+    print('\nДо новых встреч! Пока-пока.')
 
 
 if __name__ == '__main__':
