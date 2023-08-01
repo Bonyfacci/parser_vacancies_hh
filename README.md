@@ -19,8 +19,8 @@
 
 - Cоздать виртуальное окружение
 - Установить зависимости комнадой:
-- pip install -r requirements.txt
-- Записать в файл database.ini паорль для работы с базой данных PostgreSQL
+   pip install -r requirements.txt
+- Записать в файл database.ini пароль для работы с базой данных PostgreSQL
 
 ***
 
